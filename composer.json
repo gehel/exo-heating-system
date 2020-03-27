@@ -15,5 +15,8 @@
       "name": "Guillaume Lederrey",
       "email": "guillaume.lederrey@wikimedia.org"
     }
-  ]
+  ],
+  "require-dev": {
+    "mediawiki/mediawiki-codesniffer": "^30.0"
+  }
 }
