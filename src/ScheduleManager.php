@@ -25,7 +25,7 @@ class ScheduleManager {
 	}
 
 	private static function endHour(): float {
-		floatval( self::stringFromURL( "http://timer.home:9990/end", 5 ) );
+		return floatval( self::stringFromURL( "http://timer.home:9990/end", 5 ) );
 	}
 
 	private static function stringFromURL( string $urlString, int $s ) {
@@ -42,6 +42,6 @@ class ScheduleManager {
 	}
 
 	static function startHour(): float {
-		floatval( self::stringFromURL( "http://timer.home:9990/start", 5 ) );
+		return floatval( self::stringFromURL( "http://timer.home:9990/start", 5 ) );
 	}
 }
