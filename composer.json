@@ -7,9 +7,6 @@
       "src/"
     ]
   },
-  "require": {
-    "phpunit/phpunit": "^9.0"
-  },
   "authors": [
     {
       "name": "Guillaume Lederrey",
@@ -17,6 +14,6 @@
     }
   ],
   "require-dev": {
-    "mediawiki/mediawiki-codesniffer": "^30.0"
+    "mediawiki/mediawiki-codesniffer": "^41.0"
   }
 }
