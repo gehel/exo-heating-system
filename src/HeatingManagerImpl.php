@@ -1,7 +1,7 @@
 <?php
 
 class HeatingManagerImpl {
-	function manageHeating( string $t, string $threshold, bool $active ): void {
+	public function manageHeating( string $t, string $threshold, bool $active ): void {
 		$dt = floatval( $t );
 		$dThreshold = floatval( $threshold );
 		if ( $dt < $dThreshold && $active ) {

@@ -41,7 +41,7 @@ class ScheduleManager {
 		return substr( $o, 0, $s );
 	}
 
-	static function startHour(): float {
+	private static function startHour(): float {
 		return floatval( self::stringFromURL( "http://timer.home:9990/start", 5 ) );
 	}
 }
