@@ -7,16 +7,21 @@
       "src/"
     ]
   },
-  "require": {
-    "phpunit/phpunit": "^9.0"
-  },
   "authors": [
     {
       "name": "Guillaume Lederrey",
       "email": "guillaume.lederrey@wikimedia.org"
     }
   ],
+  "require": {
+    "ext-curl": "*",
+    "ext-sockets": "*"
+  },
   "require-dev": {
-    "mediawiki/mediawiki-codesniffer": "^30.0"
+    "mediawiki/mediawiki-codesniffer": "^41.0"
+  },
+  "scripts": {
+    "test": "phpcs -p -s",
+    "fix": "phpcbf"
   }
 }
