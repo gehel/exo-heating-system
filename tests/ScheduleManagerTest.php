@@ -15,7 +15,7 @@ class ScheduleManagerTest extends TestCase
 	public function testDoesNothingBeforeTime() {
 		$socketMock = $this->createMock( HomeSocketManager::class );
 		$socketMock->expects( $this->never() )
-			->method( 'send' );
+			->method( $this->anything() );
 		$this->fakeApiEndpoints();
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
@@ -31,7 +31,7 @@ class ScheduleManagerTest extends TestCase
 	public function testDoesNothingAfterTime() {
 		$socketMock = $this->createMock( HomeSocketManager::class );
 		$socketMock->expects( $this->never() )
-			->method( 'send' );
+			->method( $this->anything() );
 		$this->fakeApiEndpoints();
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
@@ -81,7 +81,7 @@ class ScheduleManagerTest extends TestCase
 	public function testDoesNothingIfExactTempMatch() {
 		$socketMock = $this->createMock( HomeSocketManager::class );
 		$socketMock->expects( $this->never() )
-			->method( 'send' );
+			->method( $this->anything() );
 		$this->fakeApiEndpoints( '20' );
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
