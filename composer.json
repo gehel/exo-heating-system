@@ -17,9 +17,11 @@
     }
   ],
   "require-dev": {
-    "mediawiki/mediawiki-codesniffer": "^41.0"
+    "mediawiki/mediawiki-codesniffer": "^41.0",
+    "php-mock/php-mock-phpunit": "^2.7"
   },
   "scripts": {
+    "phpunit": "phpunit",
     "test": [
       "@phpcs"
     ],
