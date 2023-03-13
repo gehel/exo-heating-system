@@ -40,21 +40,9 @@ class ScheduleManager {
 
 
 		$now = gettimeofday(true);
-		if ( $now > self::startHour() && $now < self::endHour() ) {
-			$t = (float)self::stringFromURL( "http://probe.home:9999/temp", 4 );
+		if ( $now > self::$httpClient->getStartHour() && $now < self::$httpClient->getEndHour() ) {
+			$t = self::$httpClient->getTemperature();
 			$hM->manageHeating( $t, (float)$threshold );
 		}
-	}
-
-	private static function endHour(): float {
-		return (float) self::stringFromURL( "http://timer.home:9990/end", 5 );
-	}
-
-	private static function stringFromURL( string $urlString, int $s ) {
-		return static::$httpClient->stringFromURL( $urlString, $s );
-	}
-
-	static function startHour(): float {
-		return (float) self::stringFromURL( "http://timer.home:9990/start", 5 );
 	}
 }
