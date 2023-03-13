@@ -38,10 +38,10 @@ class ScheduleManager {
 		}
 		$hM->setHomeSocketManager( static::$homeSocketManager );
 
-		$t = (float)self::stringFromURL( "http://probe.home:9999/temp", 4 );
 
 		$now = gettimeofday(true);
 		if ( $now > self::startHour() && $now < self::endHour() ) {
+			$t = (float)self::stringFromURL( "http://probe.home:9999/temp", 4 );
 			$hM->manageHeating( $t, (float)$threshold );
 		}
 	}
