@@ -16,16 +16,7 @@ class ScheduleManagerTest extends TestCase
 		$socketMock = $this->createMock( HomeSocketManager::class );
 		$socketMock->expects( $this->never() )
 			->method( 'send' );
-		$httpClientMock = $this->createMock( HomeHTTPClient::class );
-		$httpClientMock
-			->expects( $this->once())
-			->method('stringFromURL')
-			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
-				'http://timer.home:9990/start' => '10007',
-				'http://timer.home:9990/end' => '10022',
-				'http://probe.home:9999/temp' => '20',
-				default => throw new Exception( 'Unexpected URL' ),
-			} );
+		$this->fakeApiEndpoints();
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
 		$getTimeOfDayMock->expects( $this->once() )
@@ -33,7 +24,6 @@ class ScheduleManagerTest extends TestCase
 
 		$sut = ScheduleManager::class;
 		$sut::setHomeSocketManager( $socketMock );
-		$sut::setHomeHTTPClient( $httpClientMock );
 
 		$sut::manage( new HeatingManagerImpl(), '22' );
 	}
@@ -42,16 +32,7 @@ class ScheduleManagerTest extends TestCase
 		$socketMock = $this->createMock( HomeSocketManager::class );
 		$socketMock->expects( $this->never() )
 			->method( 'send' );
-		$httpClientMock = $this->createMock( HomeHTTPClient::class );
-		$httpClientMock
-			->expects( $this->exactly(2 ))
-			->method('stringFromURL')
-			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
-				'http://timer.home:9990/start' => '10007',
-				'http://timer.home:9990/end' => '10022',
-				'http://probe.home:9999/temp' => '20',
-				default => throw new Exception( 'Unexpected URL' ),
-			} );
+		$this->fakeApiEndpoints();
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
 		$getTimeOfDayMock->expects( $this->once() )
@@ -59,7 +40,6 @@ class ScheduleManagerTest extends TestCase
 
 		$sut = ScheduleManager::class;
 		$sut::setHomeSocketManager( $socketMock );
-		$sut::setHomeHTTPClient( $httpClientMock );
 
 		$sut::manage( new HeatingManagerImpl(), '22' );
 	}
@@ -69,16 +49,7 @@ class ScheduleManagerTest extends TestCase
 		$socketMock->expects( $this->once() )
 			->method( 'send' )
 			->with( 'heater.home', 9999, 'on' );
-		$httpClientMock = $this->createMock( HomeHTTPClient::class );
-		$httpClientMock
-			->expects( $this->exactly(3 ))
-			->method('stringFromURL')
-			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
-				'http://timer.home:9990/start' => '10007',
-				'http://timer.home:9990/end' => '10022',
-				'http://probe.home:9999/temp' => '20',
-				default => throw new Exception( 'Unexpected URL' ),
-			} );
+		$this->fakeApiEndpoints();
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
 		$getTimeOfDayMock->expects( $this->once() )
@@ -86,7 +57,6 @@ class ScheduleManagerTest extends TestCase
 
 		$sut = ScheduleManager::class;
 		$sut::setHomeSocketManager( $socketMock );
-		$sut::setHomeHTTPClient( $httpClientMock );
 
 		$sut::manage( new HeatingManagerImpl(), '22' );
 	}
@@ -96,16 +66,7 @@ class ScheduleManagerTest extends TestCase
 		$socketMock->expects( $this->once() )
 			->method( 'send' )
 			->with( 'heater.home', 9999, 'off' );
-		$httpClientMock = $this->createMock( HomeHTTPClient::class );
-		$httpClientMock
-			->expects( $this->exactly(3 ))
-			->method('stringFromURL')
-			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
-				'http://timer.home:9990/start' => '10007',
-				'http://timer.home:9990/end' => '10022',
-				'http://probe.home:9999/temp' => '24',
-				default => throw new Exception( 'Unexpected URL' ),
-			} );
+		$this->fakeApiEndpoints( '24' );
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
 		$getTimeOfDayMock->expects( $this->once() )
@@ -113,7 +74,6 @@ class ScheduleManagerTest extends TestCase
 
 		$sut = ScheduleManager::class;
 		$sut::setHomeSocketManager( $socketMock );
-		$sut::setHomeHTTPClient( $httpClientMock );
 
 		$sut::manage( new HeatingManagerImpl(), '22' );
 	}
@@ -122,16 +82,7 @@ class ScheduleManagerTest extends TestCase
 		$socketMock = $this->createMock( HomeSocketManager::class );
 		$socketMock->expects( $this->never() )
 			->method( 'send' );
-		$httpClientMock = $this->createMock( HomeHTTPClient::class );
-		$httpClientMock
-			->expects( $this->exactly(3 ))
-			->method('stringFromURL')
-			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
-				'http://timer.home:9990/start' => '10007',
-				'http://timer.home:9990/end' => '10022',
-				'http://probe.home:9999/temp' => '22',
-				default => throw new Exception( 'Unexpected URL' ),
-			} );
+		$this->fakeApiEndpoints( '20' );
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
 		$getTimeOfDayMock->expects( $this->once() )
@@ -139,9 +90,21 @@ class ScheduleManagerTest extends TestCase
 
 		$sut = ScheduleManager::class;
 		$sut::setHomeSocketManager( $socketMock );
-		$sut::setHomeHTTPClient( $httpClientMock );
 
-		$sut::manage( new HeatingManagerImpl(), '22' );
+		$sut::manage( new HeatingManagerImpl(), '20' );
 	}
+
+	private function fakeApiEndpoints( string $temperature = '20' ): void
+	{
+		$fileGetContentsMock = $this->getFunctionMock('exo\heating', 'file_get_contents');
+		$fileGetContentsMock->expects( $this->any() )
+			->willReturnCallback(fn($url) => match ($url) {
+				'http://timer.home:9990/start' => '10007',
+				'http://timer.home:9990/end' => '10022',
+				'http://probe.home:9999/temp' => $temperature,
+				default => throw new Exception('Unexpected URL'),
+			});
+	}
+
 
 }
