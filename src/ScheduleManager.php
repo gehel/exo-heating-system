@@ -9,11 +9,31 @@
  * This is purpose-built crap.
  */
 class ScheduleManager {
+
+	private static HomeSocketManager $homeSocketManager;
+	private static HomeHTTPClient $httpClient;
+
+	public static function setHomeSocketManager( HomeSocketManager $homeSocketManager ): void {
+		static::$homeSocketManager = $homeSocketManager;
+	}
+
+	public static function setHomeHTTPClient( HomeHTTPClient $httpClient ): void {
+		static::$httpClient = $httpClient;
+	}
+
 	/**
 	 * This method is the entry point into the code. You can assume that it is
 	 * called at regular interval with the appropriate parameters.
 	 */
 	public static function manage( HeatingManagerImpl $hM, string $threshold ): void {
+		if ( !isset(static::$homeSocketManager) ) {
+			static::$homeSocketManager = new HomeSocketManager();
+		}
+		if ( !isset(static::$httpClient) ) {
+			static::$httpClient = new HomeHTTPClient();
+		}
+		$hM->setHomeSocketManager( static::$homeSocketManager );
+
 		$t = self::stringFromURL( "http://probe.home:9999/temp", 4 );
 
 		if ( gettimeofday( true ) > self::startHour() && gettimeofday( true ) < self::endHour() ) {
@@ -29,16 +49,7 @@ class ScheduleManager {
 	}
 
 	private static function stringFromURL( string $urlString, int $s ) {
-		$c = curl_init();
-
-		curl_setopt( $c, CURLOPT_URL, $urlString );
-		curl_setopt( $c, CURLOPT_RETURNTRANSFER, true );
-
-		$o = curl_exec( $c );
-
-		curl_close( $c );
-
-		return substr( $o, 0, $s );
+		return static::$httpClient->stringFromURL( $urlString, $s );
 	}
 
 	static function startHour(): float {
