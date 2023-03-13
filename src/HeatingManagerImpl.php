@@ -13,9 +13,9 @@ class HeatingManagerImpl {
 	}
 	public function manageHeating( float $t, float $threshold ): void {
 		if ( $t < $threshold ) {
-			$this->homeSocketManager->send( 'heater.home', 9999, 'on' );
+			$this->homeSocketManager->turnOn();
 		} elseif ( $t > $threshold ) {
-			$this->homeSocketManager->send( 'heater.home', 9999, 'off' );
+			$this->homeSocketManager->turnOff();
 		}
 	}
 }

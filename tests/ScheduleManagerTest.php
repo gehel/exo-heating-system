@@ -47,8 +47,7 @@ class ScheduleManagerTest extends TestCase
 	public function testTurnsOnIfCold() {
 		$socketMock = $this->createMock( HomeSocketManager::class );
 		$socketMock->expects( $this->once() )
-			->method( 'send' )
-			->with( 'heater.home', 9999, 'on' );
+			->method( 'turnOn' );
 		$this->fakeApiEndpoints();
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
@@ -64,8 +63,7 @@ class ScheduleManagerTest extends TestCase
 	public function testTurnsOffIfHot() {
 		$socketMock = $this->createMock( HomeSocketManager::class );
 		$socketMock->expects( $this->once() )
-			->method( 'send' )
-			->with( 'heater.home', 9999, 'off' );
+			->method( 'turnOff' );
 		$this->fakeApiEndpoints( '24' );
 
 		$getTimeOfDayMock = $this->getFunctionMock( 'exo\heating', 'gettimeofday' );
