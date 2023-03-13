@@ -7,14 +7,7 @@ namespace exo\heating;
 class HomeHTTPClient
 {
 	public function stringFromURL( string $urlString, int $s ) {
-		$c = curl_init();
-
-		curl_setopt( $c, CURLOPT_URL, $urlString );
-		curl_setopt( $c, CURLOPT_RETURNTRANSFER, true );
-
-		$o = curl_exec( $c );
-
-		curl_close( $c );
+		$o = file_get_contents( $urlString );
 
 		return substr( $o, 0, $s );
 	}
