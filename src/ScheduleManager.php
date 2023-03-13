@@ -38,10 +38,11 @@ class ScheduleManager {
 
 		$t = self::stringFromURL( "http://probe.home:9999/temp", 4 );
 
-		if ( gettimeofday( true ) > self::startHour() && gettimeofday( true ) < self::endHour() ) {
+		$now = gettimeofday(true);
+		if ( $now > self::startHour() && $now < self::endHour() ) {
 			$hM->manageHeating( $t, $threshold, true );
 		}
-		if ( gettimeofday( true ) < self::startHour() || gettimeofday( true ) > self::endHour() ) {
+		if ( $now < self::startHour() || $now > self::endHour() ) {
 			$hM->manageHeating( $t, $threshold, false );
 		}
 	}
