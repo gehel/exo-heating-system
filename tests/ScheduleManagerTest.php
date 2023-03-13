@@ -18,7 +18,7 @@ class ScheduleManagerTest extends TestCase
 			->method( 'send' );
 		$httpClientMock = $this->createMock( HomeHTTPClient::class );
 		$httpClientMock
-			->expects( $this->exactly(3 ))
+			->expects( $this->exactly(2 ))
 			->method('stringFromURL')
 			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
 				'http://timer.home:9990/start' => '10007',
@@ -44,7 +44,7 @@ class ScheduleManagerTest extends TestCase
 			->method( 'send' );
 		$httpClientMock = $this->createMock( HomeHTTPClient::class );
 		$httpClientMock
-			->expects( $this->exactly(5 ))
+			->expects( $this->exactly(3 ))
 			->method('stringFromURL')
 			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
 				'http://timer.home:9990/start' => '10007',
@@ -71,7 +71,7 @@ class ScheduleManagerTest extends TestCase
 			->with( 'heater.home', 9999, 'on' );
 		$httpClientMock = $this->createMock( HomeHTTPClient::class );
 		$httpClientMock
-			->expects( $this->exactly(5 ))
+			->expects( $this->exactly(3 ))
 			->method('stringFromURL')
 			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
 				'http://timer.home:9990/start' => '10007',
@@ -98,7 +98,7 @@ class ScheduleManagerTest extends TestCase
 			->with( 'heater.home', 9999, 'off' );
 		$httpClientMock = $this->createMock( HomeHTTPClient::class );
 		$httpClientMock
-			->expects( $this->exactly(5 ))
+			->expects( $this->exactly(3 ))
 			->method('stringFromURL')
 			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
 				'http://timer.home:9990/start' => '10007',
@@ -124,7 +124,7 @@ class ScheduleManagerTest extends TestCase
 			->method( 'send' );
 		$httpClientMock = $this->createMock( HomeHTTPClient::class );
 		$httpClientMock
-			->expects( $this->exactly(5 ))
+			->expects( $this->exactly(3 ))
 			->method('stringFromURL')
 			->willReturnCallback( fn ( $url, $s ) => match ( $url ) {
 				'http://timer.home:9990/start' => '10007',
