@@ -36,19 +36,19 @@ class ScheduleManager {
 		}
 		$hM->setHomeSocketManager( static::$homeSocketManager );
 
-		$t = self::stringFromURL( "http://probe.home:9999/temp", 4 );
+		$t = (float)self::stringFromURL( "http://probe.home:9999/temp", 4 );
 
 		$now = gettimeofday(true);
 		if ( $now > self::startHour() && $now < self::endHour() ) {
-			$hM->manageHeating( $t, $threshold, true );
+			$hM->manageHeating( $t, (float)$threshold, true );
 		}
 		if ( $now < self::startHour() || $now > self::endHour() ) {
-			$hM->manageHeating( $t, $threshold, false );
+			$hM->manageHeating( $t, (float)$threshold, false );
 		}
 	}
 
 	private static function endHour(): float {
-		return floatval( self::stringFromURL( "http://timer.home:9990/end", 5 ) );
+		return (float) self::stringFromURL( "http://timer.home:9990/end", 5 );
 	}
 
 	private static function stringFromURL( string $urlString, int $s ) {
@@ -56,6 +56,6 @@ class ScheduleManager {
 	}
 
 	static function startHour(): float {
-		return floatval( self::stringFromURL( "http://timer.home:9990/start", 5 ) );
+		return (float) self::stringFromURL( "http://timer.home:9990/start", 5 );
 	}
 }
