@@ -18,5 +18,14 @@
   ],
   "require-dev": {
     "mediawiki/mediawiki-codesniffer": "^41.0"
+  },
+  "scripts": {
+    "test": [
+      "@phpcs"
+    ],
+    "fix": [
+      "phpcbf"
+    ],
+    "phpcs": "phpcs -sp --cache"
   }
 }
