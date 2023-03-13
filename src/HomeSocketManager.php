@@ -2,6 +2,8 @@
 
 declare( strict_types=1 );
 
+namespace exo\heating;
+
 class HomeSocketManager {
 
 	public function send( string $address, int $port, string $message ): void {

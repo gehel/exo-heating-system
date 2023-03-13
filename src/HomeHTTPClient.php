@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace exo\heating;
+
 class HomeHTTPClient
 {
 	public function stringFromURL( string $urlString, int $s ) {

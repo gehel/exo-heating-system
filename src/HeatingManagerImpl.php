@@ -1,5 +1,7 @@
 <?php
 
+namespace exo\heating;
+
 class HeatingManagerImpl {
 
 	private readonly HomeSocketManager $homeSocketManager;
