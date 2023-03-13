@@ -40,7 +40,7 @@ class ScheduleManager {
 
 		$now = gettimeofday(true);
 		if ( $now > self::startHour() && $now < self::endHour() ) {
-			$hM->manageHeating( $t, (float)$threshold, true );
+			$hM->manageHeating( $t, (float)$threshold );
 		}
 	}
 
